@@ -75,9 +75,7 @@ class __CalculatorKeyboardState extends State<CalculatorKeyboardField> {
       CalculatorButton(symbol: CalculatorKeys.one, onTap: _onTap),
       CalculatorButton(symbol: CalculatorKeys.two, onTap: _onTap),
       CalculatorButton(symbol: CalculatorKeys.three, onTap: _onTap),
-      CalculatorButton(
-          symbol: CalculatorKeys.backspace,
-          onTap: (_) => calculator.backspace()),
+      CalculatorButton(symbol: CalculatorKeys.backspace, onTap: _onTap),
       // line 3
       CalculatorButton(symbol: CalculatorKeys.four, onTap: _onTap),
       CalculatorButton(symbol: CalculatorKeys.five, onTap: _onTap),
