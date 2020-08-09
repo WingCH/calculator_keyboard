@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:math_expressions/math_expressions.dart';
 
+import 'calculator.dart';
+import 'calculator_button.dart';
 import 'calculator_key_symbol.dart';
 
 // ref: https://github.com/ShehriyarShariq/FlutterCalculator
@@ -34,86 +36,26 @@ class CalculatorKeyboardField extends StatefulWidget
 }
 
 class __CalculatorKeyboardState extends State<CalculatorKeyboardField> {
-  String numberA = "";
-  String numberB = "";
-  String operator = "";
+  Calculator calculator = Calculator();
 
   // 算式 = numberA + operator + numberB, e,g: ( 1 + 2 ), ( 2 + 5)
   String equation() {
-    return numberA + operator + numberB;
+//    return numberA + operator + numberB;
   }
 
   // all calculator Widget
-  List<CalculatorKeyWidget> calculatorKeyItemList;
+  List<CalculatorButton> calculatorKeyItemList;
 
   void _onTap(CalculatorKeySymbol symbol) {
-    switch (symbol.type) {
-      case CalculatorKeyType.FUNCTION:
-        if (symbol == CalculatorKeys.clear) {
-          numberA = "";
-          numberB = "";
-          operator = "";
-        }
-        break;
-      case CalculatorKeyType.OPERATOR:
-        if (numberA.isEmpty) return;
-        if (operator.isEmpty || numberB.isEmpty) {
-          operator = symbol.value;
-        } else {
-          try {
-            Map<String, String> operatorsMap = {
-              "÷": "/",
-              "x": "*",
-              "−": "-",
-              "+": "+"
-            };
-            Expression exp = (Parser()).parse(
-              operatorsMap.entries.fold(
-                equation(),
-                (prev, elem) => prev.replaceAll(elem.key, elem.value),
-              ),
-            );
-            double res = double.parse(
-                exp.evaluate(EvaluationType.REAL, ContextModel()).toString());
-
-            numberA = res.toString();
-            numberB = "";
-            operator = symbol.value;
-
-//            widget.updateValue(_formatValue(double.parse(result)));
-          } catch (e) {
-            print(e);
-          }
-        }
-        break;
-      case CalculatorKeyType.INTEGER:
-        if (numberA.isEmpty || operator.isEmpty) {
-          numberA += symbol.value;
-        } else {
-          numberB += symbol.value;
-        }
-        break;
-    }
-    setState(() {});
+    setState(() {
+      calculator.inputValue(symbol);
+    });
   }
 
   void _hideKeyboard() {
     if (widget.focusNode?.hasFocus ?? false) {
       widget.focusNode.unfocus();
     }
-  }
-
-  void _onTapBackspace() {
-    setState(() {
-      if (numberB.isNotEmpty) {
-        numberB = numberB.substring(0, numberB.length - 1);
-      } else if (operator.isNotEmpty) {
-        operator = "";
-      } else if (numberA.isNotEmpty) {
-        numberA = numberA.substring(0, numberA.length - 1);
-      }
-    });
-    print('object');
   }
 
   void _onTapEquals(_) {
@@ -125,32 +67,33 @@ class __CalculatorKeyboardState extends State<CalculatorKeyboardField> {
   void initState() {
     calculatorKeyItemList = [
       // line 1
-      CalculatorKeyWidget(symbol: CalculatorKeys.divide, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.multiply, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.subtract, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.add, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.divide, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.multiply, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.subtract, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.add, onTap: _onTap),
       // line 2
-      CalculatorKeyWidget(symbol: CalculatorKeys.one, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.two, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.three, onTap: _onTap),
-      CalculatorKeyWidget(
-          symbol: CalculatorKeys.backspace, onTap: (_) => _onTapBackspace()),
+      CalculatorButton(symbol: CalculatorKeys.one, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.two, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.three, onTap: _onTap),
+      CalculatorButton(
+          symbol: CalculatorKeys.backspace,
+          onTap: (_) => calculator.backspace()),
       // line 3
-      CalculatorKeyWidget(symbol: CalculatorKeys.four, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.five, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.six, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.clear, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.four, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.five, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.six, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.clear, onTap: _onTap),
       // line 4
-      CalculatorKeyWidget(symbol: CalculatorKeys.seven, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.eight, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.nine, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.currency, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.seven, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.eight, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.nine, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.currency, onTap: _onTap),
       // line 5
-      CalculatorKeyWidget(symbol: CalculatorKeys.decimal, onTap: _onTap),
-      CalculatorKeyWidget(symbol: CalculatorKeys.zero, onTap: _onTap),
-      CalculatorKeyWidget(
+      CalculatorButton(symbol: CalculatorKeys.decimal, onTap: _onTap),
+      CalculatorButton(symbol: CalculatorKeys.zero, onTap: _onTap),
+      CalculatorButton(
           symbol: CalculatorKeys.keyboardHide, onTap: (_) => _hideKeyboard()),
-      CalculatorKeyWidget(symbol: CalculatorKeys.equals, onTap: _onTapEquals),
+      CalculatorButton(symbol: CalculatorKeys.equals, onTap: _onTapEquals),
     ];
     super.initState();
   }
@@ -180,7 +123,7 @@ class __CalculatorKeyboardState extends State<CalculatorKeyboardField> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          equation(),
+                          calculator.equation,
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ],
