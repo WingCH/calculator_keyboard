@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  keyboard_actions: ^3.3.0+1
+  math_expressions: ^2.0.0
 
 dev_dependencies:
   flutter_test:
