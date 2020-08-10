@@ -32,5 +32,22 @@ void main() {
       calculator.inputValue(CalculatorKeys.add);
       expect(calculator.result, 3.0);
     });
+
+    test('test3', () {
+      final calculator = Calculator();
+      calculator.inputValue(CalculatorKeys.subtract);
+      calculator.inputValue(CalculatorKeys.one);
+      expect(calculator.equation, "-1");
+      calculator.inputValue(CalculatorKeys.add);
+//      calculator.inputValue(CalculatorKeys.subtract);
+      expect(calculator.equation, "-1+");
+      calculator.inputValue(CalculatorKeys.two);
+      expect(calculator.equation, "-1+2");
+      calculator.inputValue(CalculatorKeys.add);
+      expect(calculator.result, 1.0);
+      expect(calculator.equation, "1.0+");
+      calculator.inputValue(CalculatorKeys.two);
+      expect(calculator.equation, "1.0+2");
+    });
   });
 }

@@ -17,7 +17,7 @@ class Calculator {
 
   // 算式 = (+/-) + numberA + operator + numberB, e,g: ( +1 + 2 ), ( -2 + 5)
   String get equation =>
-      (isPositive == true ? "" : "-") + _numberA + operator + _numberB ;
+      (isPositive == true ? "" : "-") + _numberA + operator + _numberB;
 
   void inputValue(CalculatorKeySymbol symbol) {
     switch (symbol.type) {
@@ -56,7 +56,10 @@ class Calculator {
               if (numberB.isEmpty) {
                 operator = symbol.value;
               } else {
-                evaluate();
+                evaluate(onFinish: (result) {
+                  updateResult(result);
+                  operator = symbol.value;
+                });
               }
             }
           }
@@ -76,7 +79,7 @@ class Calculator {
     }
   }
 
-  void evaluate() {
+  void evaluate({Function(double) onFinish}) {
     // 轉換數學符號，因為顯示和計算的符號不一樣
     Map<String, String> operatorsMap = {
       "÷": "/",
@@ -96,18 +99,29 @@ class Calculator {
         exp.evaluate(EvaluationType.REAL, ContextModel()).toString(),
       );
 
-      result = res;
+      onFinish(res);
     } catch (e) {
       print(e);
     }
   }
 
-
-
   void reset() {
     isPositive = true;
     _numberA = "";
     _numberB = "";
+    operator = "";
+  }
+
+  void updateResult(double result) {
+    this.result = result;
+    isPositive = result > 0;
+
+    // 如果result是負數，將result 變成正數，並將isPositive 變成 false
+    if (!(result > 0)) {
+      result = result * -1;
+    }
+    replaceNumberA(result.toString());
+    replaceNumberB("");
     operator = "";
   }
 
@@ -128,7 +142,7 @@ class Calculator {
   }
 
   void replaceNumberB(String newNumber) {
-    _numberB += newNumber;
+    _numberB = newNumber;
   }
 
   void backspace() {
