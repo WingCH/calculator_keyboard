@@ -4,22 +4,18 @@ import 'calculator_key.dart';
 import 'calculator_key_symbol.dart';
 
 class Calculator {
-  bool _isPositive = true;
+  bool isPositive = true;
   String _numberA = "";
+  String operator = "";
   String _numberB = "";
-  String _operator = "";
+
+  String get numberB => _numberB;
+
+  String get numberA => _numberA;
 
   // 算式 = (+/-) + numberA + operator + numberB, e,g: ( +1 + 2 ), ( -2 + 5)
   String get equation =>
-      (_isPositive == true ? "" : "-") + _numberA + _numberB + _operator;
-
-  set isPositive(bool value) {
-    _isPositive = value;
-  } // 計算
-
-  set operator(String value) {
-    _operator = value;
-  }
+      (isPositive == true ? "" : "-") + _numberA + _numberB + operator;
 
   void inputValue(CalculatorKeySymbol symbol) {
     switch (symbol.type) {
