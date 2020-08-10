@@ -1,13 +1,14 @@
+import 'package:calculator_keyboard/src/calculator.dart';
+import 'package:calculator_keyboard/src/calculator_key.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:calculator_keyboard/src/calculator_keyboard.dart';
-
 void main() {
-  test('adds one to input values', () {
-//    final calculator = Calculator();
-//    expect(calculator.addOne(2), 3);
-//    expect(calculator.addOne(-7), -6);
-//    expect(calculator.addOne(0), 1);
-//    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+  test('test 1', () {
+    final calculator = Calculator();
+    calculator.inputValue(CalculatorKeys.one);
+    expect(calculator.numberA, "1");
   });
+
+
+
 }
