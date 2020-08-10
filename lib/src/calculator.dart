@@ -34,6 +34,7 @@ class Calculator {
   }
 
   double evaluate() {
+    // 轉換數學符號，因為顯示和計算的符號不一樣
     Map<String, String> operatorsMap = {
       "÷": "/",
       "x": "*",
