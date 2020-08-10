@@ -25,10 +25,32 @@ class Calculator {
         }
         break;
       case CalculatorKeyType.OPERATOR:
-        if (symbol.value == "") {}
+        if (symbol == CalculatorKeys.decimal) {
+          if (numberA.isNotEmpty) {
+            if (operator.isEmpty) {
+              if (!checkDecimal(numberA)) {
+                updateNumberA(symbol.value);
+              }
+            } else {
+              if (numberB.isNotEmpty) {
+                if (!checkDecimal(numberB)) {
+                  updateNumberB(symbol.value);
+                }
+              }
+            }
+          }
+        }
         break;
       case CalculatorKeyType.INTEGER:
-        _numberA += symbol.value;
+        if (numberA.isEmpty) {
+          updateNumberA(symbol.value);
+        } else {
+          if (operator.isEmpty) {
+            updateNumberA(symbol.value);
+          } else {
+            updateNumberB(symbol.value);
+          }
+        }
         break;
     }
   }
