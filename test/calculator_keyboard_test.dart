@@ -8,7 +8,4 @@ void main() {
     calculator.inputValue(CalculatorKeys.one);
     expect(calculator.numberA, "1");
   });
-
-
-
 }
