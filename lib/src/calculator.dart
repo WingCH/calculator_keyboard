@@ -9,9 +9,9 @@ class Calculator {
   String operator = "";
   String _numberB = "";
 
-  String get numberB => _numberB;
-
   String get numberA => _numberA;
+
+  String get numberB => _numberB;
 
   // 算式 = (+/-) + numberA + operator + numberB, e,g: ( +1 + 2 ), ( -2 + 5)
   String get equation =>
@@ -89,7 +89,7 @@ class Calculator {
   void backspace() {
     if (_numberB.isNotEmpty) {
       replaceNumberB(_numberB.substring(0, _numberB.length - 1));
-    } else if (_operator.isNotEmpty) {
+    } else if (operator.isNotEmpty) {
       operator = "";
     } else if (_numberA.isNotEmpty) {
       replaceNumberA(_numberA.substring(0, _numberA.length - 1));
