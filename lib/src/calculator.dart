@@ -122,7 +122,6 @@ class Calculator {
     }
     replaceNumberA(result.toString());
     replaceNumberB("");
-    operator = "";
   }
 
   bool checkDecimal(String value) {
