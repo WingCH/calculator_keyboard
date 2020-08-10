@@ -12,6 +12,25 @@ void main() {
       expect(calculator.equation, "11");
       calculator.inputValue(CalculatorKeys.decimal);
       expect(calculator.equation, "11.");
+      calculator.inputValue(CalculatorKeys.five);
+      expect(calculator.equation, "11.5");
+      calculator.inputValue(CalculatorKeys.decimal);
+      expect(calculator.equation, "11.5");
+    });
+
+    test('test2', () {
+      final calculator = Calculator();
+      calculator.inputValue(CalculatorKeys.one);
+      expect(calculator.equation, "1");
+
+      calculator.inputValue(CalculatorKeys.add);
+      expect(calculator.equation, "1+");
+
+      calculator.inputValue(CalculatorKeys.two);
+      expect(calculator.equation, "1+2");
+
+      calculator.inputValue(CalculatorKeys.add);
+      expect(calculator.result, 3.0);
     });
   });
 }

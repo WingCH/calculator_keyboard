@@ -9,13 +9,15 @@ class Calculator {
   String operator = "";
   String _numberB = "";
 
+  double result = 0.0;
+
   String get numberA => _numberA;
 
   String get numberB => _numberB;
 
   // 算式 = (+/-) + numberA + operator + numberB, e,g: ( +1 + 2 ), ( -2 + 5)
   String get equation =>
-      (isPositive == true ? "" : "-") + _numberA + _numberB + operator;
+      (isPositive == true ? "" : "-") + _numberA + operator + _numberB ;
 
   void inputValue(CalculatorKeySymbol symbol) {
     switch (symbol.type) {
@@ -25,6 +27,7 @@ class Calculator {
         }
         break;
       case CalculatorKeyType.OPERATOR:
+        // "."
         if (symbol == CalculatorKeys.decimal) {
           if (numberA.isNotEmpty) {
             if (operator.isEmpty) {
@@ -36,6 +39,24 @@ class Calculator {
                 if (!checkDecimal(numberB)) {
                   updateNumberB(symbol.value);
                 }
+              }
+            }
+          }
+        } else {
+          // 符號
+          if (numberA.isEmpty) {
+            if (symbol == CalculatorKeys.add ||
+                symbol == CalculatorKeys.subtract) {
+              isPositive = (symbol == CalculatorKeys.add);
+            }
+          } else {
+            if (operator.isEmpty) {
+              operator = symbol.value;
+            } else {
+              if (numberB.isEmpty) {
+                operator = symbol.value;
+              } else {
+                evaluate();
               }
             }
           }
@@ -55,7 +76,7 @@ class Calculator {
     }
   }
 
-  double evaluate() {
+  void evaluate() {
     // 轉換數學符號，因為顯示和計算的符號不一樣
     Map<String, String> operatorsMap = {
       "÷": "/",
@@ -75,12 +96,13 @@ class Calculator {
         exp.evaluate(EvaluationType.REAL, ContextModel()).toString(),
       );
 
-      return res;
+      result = res;
     } catch (e) {
-      return 0.0;
-//      throw e;
+      print(e);
     }
   }
+
+
 
   void reset() {
     isPositive = true;
