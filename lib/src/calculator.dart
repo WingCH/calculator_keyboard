@@ -11,7 +11,7 @@ class Calculator {
 
   // 算式 = (+/-) + numberA + operator + numberB, e,g: ( +1 + 2 ), ( -2 + 5)
   String get equation =>
-      (_isPositive == true ? "+" : "-") + _numberA + _numberB + _operator;
+      (_isPositive == true ? "" : "-") + _numberA + _numberB + _operator;
 
   set isPositive(bool value) {
     _isPositive = value;
@@ -78,12 +78,12 @@ class Calculator {
     _numberA += newNumber;
   }
 
-  void replaceNumberA(String newNumber) {
-    _numberA = newNumber;
-  }
-
   void updateNumberB(String newNumber) {
     _numberB += newNumber;
+  }
+
+  void replaceNumberA(String newNumber) {
+    _numberA = newNumber;
   }
 
   void replaceNumberB(String newNumber) {

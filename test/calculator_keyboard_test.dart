@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:calculator_keyboard/calculator_keyboard.dart';
+import 'package:calculator_keyboard/src/calculator_keyboard.dart';
 
 void main() {
   test('adds one to input values', () {
