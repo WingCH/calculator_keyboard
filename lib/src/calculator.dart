@@ -61,10 +61,10 @@ class Calculator {
   }
 
   void reset() {
-    _isPositive = true;
+    isPositive = true;
     _numberA = "";
     _numberB = "";
-    _operator = "";
+    operator = "";
   }
 
   bool checkDecimal(String value) {
